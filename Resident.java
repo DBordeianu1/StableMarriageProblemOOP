@@ -9,6 +9,8 @@ public class Resident {
 	private String firstname;
 	private String lastname;
 	private String[] rol;
+	private Program matchedProgram; //null if the resident has not been matched
+	private int matchedRank;
 	
 	// constructs a Resident
     public Resident(int id, String fname, String lname) {
@@ -18,10 +20,28 @@ public class Resident {
 		lastname= lname;
 	}
 
+	//getters
+	public int getID(){
+		return residentID;
+	}
+
+	public int getRank(){
+		return matchedRank;
+	}
+
+	//setters
     // the rol in order of preference
 	public void setROL(String[] rol) {
-		
+
 		this.rol= rol;
+	}
+
+	public void setMatchedProgram(Program program){
+		matchedProgram=program;
+	}
+
+	public void setMatchedRank(int i){
+		matchedRank=i;
 	}
 	
 	// string representation

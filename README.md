@@ -1,6 +1,6 @@
 ## The Stable Marriage Problem
 
-### This repository implements a solution to the stable marriage problem using the Object-Oriented paradigm 
+### This repository implements a solution to the stable marriage problem using the Object-Oriented paradigm and the Gale-Shaple algorithm
 
 ---
 
