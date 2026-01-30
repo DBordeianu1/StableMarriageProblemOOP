@@ -8,7 +8,7 @@ public class Resident {
 	private int residentID;
 	private String firstname;
 	private String lastname;
-	private Program[] rol; // Program or String ?
+	private String[] rol;
 	private Program matchedProgram; // null if the resident has not been matched
 	private int matchedRank; // -1 if the resident has not been matched - dangerous ?
 	
@@ -33,7 +33,7 @@ public class Resident {
 
 	//setters
     // the rol in order of preference
-	public void setROL(Program[] rol) { // Program or String ?
+	public void setROL(String[] rol) {
 
 		this.rol= rol;
 	}

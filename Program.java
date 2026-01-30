@@ -8,7 +8,7 @@ public class Program {
 	private String programID;
 	private String name;
 	private int quota;
-	private Resident[] rol; // important that it is in ascending order - Resident or int ?
+	private int[] rol; // important that it is in ascending order
 	private Resident[] matchedResidents;
 	private int pointer; // points at the first null cell in matchedResidents, cannot be greater than quota
 	
@@ -23,7 +23,7 @@ public class Program {
 	}
 
     // the rol in order of preference
-	public void setROL(Resident[] rol) { // Resident or int ?
+	public void setROL(int[] rol) {
 		
 		this.rol= rol;
 	}
@@ -37,7 +37,7 @@ public class Program {
 	public boolean member(int residentID){
 		//do we have to optimize time-complexity
 		for (int i=0;i<rol.length;i++){
-			if (rol[i].getID() == residentID){
+			if (rol[i] == residentID){
 				return true;
 			}
 		}
@@ -46,7 +46,7 @@ public class Program {
 
 	public int rank(int residentID){
 		for (int i=0;i<rol.length;i++){
-			if (rol[i].getID() == residentID){
+			if (rol[i] == residentID){
 				return i+1; //0 cannot be a rank - why not ?
 			}
 		}
