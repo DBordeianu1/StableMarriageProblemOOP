@@ -4,7 +4,7 @@
 
 // this is the (incomplete) Resident class
 
-// Completed by Roman Solomakha St. No. 300422752 and Daniela Bordeianu St. No. ?
+// Completed by Roman Solomakha St. No. 300422752 and Daniela Bordeianu St. No. 300435411
 public class Resident {
 	
 	private int residentID;
@@ -25,12 +25,24 @@ public class Resident {
 
 	//getters
 
+	public String getFirstname(){
+		return firstname;
+	}
+
+	public String getLastname(){
+		return lastname;
+	}
+
 	public int getID(){
 		return residentID;
 	}
 
 	public int getRank(){
 		return matchedRank;
+	}
+
+	public Program getMatchedProgram(){
+		return matchedProgram;
 	}
 
 	public String[] getROL() {

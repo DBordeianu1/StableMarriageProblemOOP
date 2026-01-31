@@ -1,6 +1,8 @@
 // Project CSI2120/CSI2520
 // Winter 2026
 // Robert Laganiere, uottawa.ca
+
+// Completed by Roman Solomakha St. No. 300422752 and Daniela Bordeianu St. No. 300435411
 import java.io.*;
 import java.util.HashMap;
 
@@ -179,18 +181,55 @@ public class GaleShapley {
 		}	
     }
 
+	public HashMap<Integer,Resident> unmatched = new HashMap<Integer,Resident>();	// keep track of unmatched residents
+
+    public void algorithm(Resident r){
+    	String[] rol = r.getROL();
+    	for (int i = 0; i < rol.length; i++){	// go through all programs on resident's rol
+    		Program p = programs.get(rol[i]);
+    		Resident attempt = p.addResident(r);
+    		if (attempt != null){	// took place of another resident
+    			algorithm(attempt);	// place the other resident
+    			return;
+    		}
+    		if (r.getRank() != -1){	// took free place
+    			return;
+    		}
+    	}
+    	unmatched.put(r.getID(), r);	// couldn't find a program for resident 
+    	return;
+    }
+
 	public static void main(String[] args) {
 		
-		
+		GaleShapley gs = null;
 		try {
 			
-			GaleShapley gs= new GaleShapley(args[0],args[1]);
+			gs = new GaleShapley(args[0],args[1]);
 			
 			System.out.println(gs.residents);
 			System.out.println(gs.programs);
+			System.out.println();
 			
         } catch (Exception e) {
-            System.err.println("Error reading the file: " + e.getMessage());
+            System.err.println("Error reading the file: " + e.getMessage()); 
         }
+
+        for (Resident r : gs.residents.values()){	// go through all the residents one by one
+    		gs.algorithm(r);
+    	}
+    	System.out.println("lastname,firstname,residentID,programID,name");
+    	for (Resident r : gs.residents.values()){
+    		if (r.getRank() != -1){
+    			System.out.println(r.getLastname()+","+r.getFirstname()+","+Integer.toString(r.getID())+","+r.getMatchedProgram().getID()+","+r.getMatchedProgram().getName());
+    		}
+    	}
+    	System.out.println();
+    	System.out.println("Number of unmatched residents : "+Integer.toString(gs.unmatched.size()));
+    	int totalAvalible = 0;
+    	for (Program p : gs.programs.values()){
+    		totalAvalible += p.avalible();
+    	}
+    	System.out.println("Number of positions available : "+Integer.toString(totalAvalible));
 	}
 }
