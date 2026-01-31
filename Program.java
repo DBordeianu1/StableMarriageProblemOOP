@@ -3,6 +3,8 @@
 // Robert Laganiere, uottawa.ca
 
 // this is the (incomplete) Program class
+
+// Completed by Roman Solomakha St. No. 300422752 and Daniela Bordeianu St. No. ?
 public class Program {
 	
 	private String programID;
@@ -14,7 +16,6 @@ public class Program {
 	
 	// constructs a Program
     public Program(String id, String n, int q) {
-	
 		programID = id;
 		name = n;
 		quota = q;
@@ -24,18 +25,15 @@ public class Program {
 
     // the rol in order of preference
 	public void setROL(int[] rol) {
-		
 		this.rol= rol;
 	}
 	
 	// string representation
 	public String toString() {
-      
-       return "["+programID+"]: "+name+" {"+ quota+ "}" +" ("+rol.length+")";	  
+		return "["+programID+"]: "+name+" {"+ quota+ "}" +" ("+rol.length+")";	  
 	}
 
 	public boolean member(int residentID){
-		//do we have to optimize time-complexity
 		for (int i=0;i<rol.length;i++){
 			if (rol[i] == residentID){
 				return true;
@@ -53,7 +51,7 @@ public class Program {
 		return -1; //if resident not in the list - dangerous cuz technically that would be most desired resident ?
 	}
 
-	public Resident leastPreferred(){
+	public Resident leastPreferred(){// returns a REFERENCE to leastPreferred resident in matchedResidents
 		int worstRank = 0; // highier rank = worse, starting worst rank = 0
 		int worstResident = -1; // remembering worst resident
 		for (int i = (pointer - 1); i <= 0; i--){ // checking every matched resident 
@@ -65,7 +63,7 @@ public class Program {
 		return matchedResidents[worstResident];
 	}
 
-	public int leastPreferredPos(){ // returns the position of leastPreferred resident in matchedResidents
+	public int leastPreferredPos(){ // returns the POSITION of leastPreferred resident in matchedResidents
 		int worstRank = 0; // highier rank = worse, starting worst rank = 0
 		int worstResident = -1; // remembering worst resident
 		for (int i = (pointer - 1); i <= 0; i--){ // checking every matched resident
@@ -77,17 +75,17 @@ public class Program {
 		return worstResident;
 	}
 
-	public void addResident(Resident resident){
+	public Resident addResident(Resident resident){
 		int r = rank(resident.getID());
-		if (r != -1){ // only if member ?
+		if (r != -1){ // chechking for member
 			if (pointer != quota){ 	// if has not reached quota
 				matchedResidents[pointer] = resident;
 				resident.setMatchedProgram(this);
 				resident.setMatchedRank(rank(resident.getID()));
 				pointer++;
-				return;
+				return null;
 			}
-			else { // if has reached quota
+			else {	// if has reached quota
 				int l =  leastPreferredPos();
 				Resident least = matchedResidents[l];
 				if (r < least.getRank()) {
@@ -95,10 +93,11 @@ public class Program {
 					resident.setMatchedProgram(this);
 					resident.setMatchedRank(r);
 					least.setMatchedProgram(null);
-					least.setMatchedRank(-1); // - dangerous ?
+					least.setMatchedRank(-1);
+					return least;
 				}
 			}
 		}
-		return;
+		return null;
 	}
 }
