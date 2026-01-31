@@ -11,8 +11,16 @@ public class GaleShapley {
 	
 	public HashMap<Integer,Resident> residents;
 	public HashMap<String,Program> programs;
+	public HashMap<Integer,Resident> unmatched = new HashMap<Integer,Resident>();	// keep track of unmatched residents
 	
-
+	/**
+	 * Constructs an object of type GaleShapley
+	 * 
+	 * @param residentsFilename the name of the list of the residents' input file
+	 * @param programsFilename the name of the list of the programs' input file
+	 * @throws IOException if readResidents(String) or readPrograms(String) throws an exception
+	 * @throws NumberFormatException if readResidents(String) or readPrograms(String) throws an exception
+	 */
 	public GaleShapley(String residentsFilename, String programsFilename) throws IOException, 
 													NumberFormatException {
 		
@@ -20,8 +28,13 @@ public class GaleShapley {
 		readPrograms(programsFilename);
 	}
 	
-	// Reads the residents csv file
-	// It populates the residents HashMap
+	/**
+	 * Reads the residents csv file. It populates the residents HashMap
+	 * 
+	 * @param residentsFilename the name of the file containing the residents
+	 * @throws IOException if the file has an invalid format
+	 * @throws NumberFormatException if the file has an invalid format
+	 */
     public void readResidents(String residentsFilename) throws IOException, 
 													NumberFormatException {
 
@@ -97,9 +110,13 @@ public class GaleShapley {
 		}	
     }
 
-	
-	// Reads the programs csv file
-	// It populates the programs HashMap
+	/**
+	 * Reads the programs csv file. It populates the programs HashMap
+	 * 
+	 * @param programsFilename the name of the file containing the programs
+	 * @throws IOException if the file has an invalid format
+	 * @throws NumberFormatException if the file has an invalid format
+	 */
     public void readPrograms(String programsFilename) throws IOException, 
 													NumberFormatException {
 
@@ -181,8 +198,11 @@ public class GaleShapley {
 		}	
     }
 
-	public HashMap<Integer,Resident> unmatched = new HashMap<Integer,Resident>();	// keep track of unmatched residents
-
+	/**
+	 * Implementation of the Gale-Shapley algorithm
+	 * 
+	 * @param r the resident with which the Gale-Shapley algorthim is initiated
+	 */
     public void algorithm(Resident r){
     	String[] rol = r.getROL();
     	for (int i = 0; i < rol.length; i++){	// go through all programs on resident's rol
@@ -200,6 +220,12 @@ public class GaleShapley {
     	return;
     }
 
+	/**
+	 * The entry point of the program. Instanciates a GaleShapley instance
+	 * Reads input arguments from the console. Calls methods that process the input files
+	 * 
+	 * @param args the arguments from the console
+	 */
 	public static void main(String[] args) {
 		
 		GaleShapley gs = null;
@@ -228,7 +254,7 @@ public class GaleShapley {
     	System.out.println("Number of unmatched residents : "+Integer.toString(gs.unmatched.size()));
     	int totalAvalible = 0;
     	for (Program p : gs.programs.values()){
-    		totalAvalible += p.avalible();
+    		totalAvalible += p.available();
     	}
     	System.out.println("Number of positions available : "+Integer.toString(totalAvalible));
 	}
